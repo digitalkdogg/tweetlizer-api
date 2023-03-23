@@ -9,7 +9,7 @@ class TweetController extends Controller
 {
     public function getAll()
     {
-        $tweets = DB::select('SELECT * FROM `tweet-compare`.tweets');
+        $tweets = DB::select('SELECT * FROM tweetliz_main.tweets');
         return $tweets;
         //return view('tweets.index', ['users' => $users]);
     }
