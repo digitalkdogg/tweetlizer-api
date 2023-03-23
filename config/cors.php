@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['GET', 'POST'],
 
-    'allowed_origins' => ['https://tweetlizer.com', 'http://localhost:8001'],
+    'allowed_origins' => ['https://tweetlizer.com', 'http://localhost:8001', 'http://localhost:3000'],
 
     'allowed_origins_patterns' => [],
 
