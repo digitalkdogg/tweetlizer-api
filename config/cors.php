@@ -17,9 +17,9 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['GET', 'POST'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://tweetlizer.com', 'http://localhost:8001'],
 
     'allowed_origins_patterns' => [],
 
