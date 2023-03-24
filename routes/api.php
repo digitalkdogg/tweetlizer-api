@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RandomGeneratorController;
 use Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
