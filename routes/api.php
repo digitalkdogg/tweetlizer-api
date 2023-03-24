@@ -34,23 +34,29 @@ Route::get('/genkey', function() {
     return response($token, 200)->header('Content-Type', 'application/json');
 });
 
-Route::get('/auth', function (Request $req) {
+Route::post('/auth', function (Request $req) {
     $auth = (new AuthController);
-    $auth_rec = $auth->lookup($req->getHttpHost());
 
-    if ($auth_rec->count()==1) {
-        foreach ($auth_rec as $rec) {
-            $token = $auth->checkBearer($rec);
+    if ($req->isMethod('post')==true) {
+
+        $auth_rec = $auth->lookup($req);
+
+        if ($auth_rec->count()==1) {
+            foreach ($auth_rec as $rec) {
+                $token = $auth->checkBearer($rec);
+            }
+            $mytime = Carbon\Carbon::now()->addHour();
+            $data = ['id' => $auth_rec[0]->key, 'bearer'=> $token, 'expires_at'=> $mytime, 'auth_id' => $auth_rec[0]->id];
+            $bearer = $auth->setBearer($data);
+            return response($bearer, 200)->header('Content-Type', 'application/json');
+        } else {
+            $not_auth = ['bearer'=>'not_authorized', 'ip'=> $req->getHttpHost()];
+            return response($not_auth, 401)->header('Content-Type', 'application/json');
         }
-        $mytime = Carbon\Carbon::now()->addHour();
-        $data = ['id' => $auth_rec[0]->key, 'bearer'=> $token, 'expires_at'=> $mytime, 'auth_id' => $auth_rec[0]->id];
-        $bearer = $auth->setBearer($data);
-        return response($bearer, 200)->header('Content-Type', 'application/json');
     } else {
-        $not_auth = ['bearer'=>'not_authorized', 'ip'=> $req->getHttpHost()];
-        return response($not_auth, 401)->header('Content-Type', 'application/json');
+        $invalid = ['bearer'=>'invalid'];
+        return response($invalid, 401)->header('Content-Type', 'application/json');
     }
-   
 });
 
 Route::get('/test', function () {

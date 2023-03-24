@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Request;
 use Session;
-use Str;
+use Illuminate\Support\Str;
 use Carbon;
 //use Header;
 use App\Http\Controllers\RandomGeneratorController;
@@ -15,11 +15,25 @@ class AuthController extends Controller
 {
     public function lookup($req)
     {
-        //var_dump(Header::get('referer'));
+        $referrer = $this->getReferrer($req->getUri());
+
         $auth = DB::table('auth')
-                ->where('host', $req)
+                ->where('host', $referrer)
                 ->get();
         return $auth;
+    }
+
+    private function getReferrer($uri) {
+        //$uri = $req->getUri();
+        $uri = Str::of($uri)->replace('http://', '');
+        $uri = Str::of($uri)->replace('https://', '');
+        $urisplit = Str::of($uri)->split('/[\s\/]+/');
+        $referrer = '';
+        if ($urisplit->count()>=1) {
+            $referrer = $urisplit[0];
+        }
+
+        return $referrer;
     }
 
     protected function genBearer() {
