@@ -1,11 +1,10 @@
 <?php
 
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RandomGeneratorController;
-use Request as Req;
 
 
 /*
@@ -35,9 +34,9 @@ Route::get('/genkey', function() {
     return response($token, 200)->header('Content-Type', 'application/json');
 });
 
-Route::get('/auth', function () {
+Route::get('/auth', function (Request $req) {
     $auth = (new AuthController);
-    $auth_rec = $auth->lookup();
+    $auth_rec = $auth->lookup($req->getHttpHost());
 
     if ($auth_rec->count()==1) {
         foreach ($auth_rec as $rec) {
@@ -48,7 +47,7 @@ Route::get('/auth', function () {
         $bearer = $auth->setBearer($data);
         return response($bearer, 200)->header('Content-Type', 'application/json');
     } else {
-        $not_auth = ['bearer'=>'not_authorized', 'ip'=> Req::ip()];
+        $not_auth = ['bearer'=>'not_authorized', 'ip'=> $req->getHttpHost()];
         return response($not_auth, 401)->header('Content-Type', 'application/json');
     }
    

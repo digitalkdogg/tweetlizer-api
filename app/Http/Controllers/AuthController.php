@@ -8,14 +8,16 @@ use Request;
 use Session;
 use Str;
 use Carbon;
+//use Header;
 use App\Http\Controllers\RandomGeneratorController;
 
 class AuthController extends Controller
 {
-    public function lookup()
+    public function lookup($req)
     {
+        //var_dump(Header::get('referer'));
         $auth = DB::table('auth')
-                ->where('ip_address', Request::ip())
+                ->where('ip_address', $req)
                 ->get();
         return $auth;
     }
