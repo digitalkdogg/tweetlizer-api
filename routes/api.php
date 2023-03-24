@@ -46,7 +46,7 @@ Route::get('/auth', function () {
         $bearer = $auth->setBearer($data);
         return response($bearer, 200)->header('Content-Type', 'application/json');
     } else {
-        $not_auth = ['bearer'=>'not_authorized'];
+        $not_auth = ['bearer'=>'not_authorized', 'ip'=> Request::ip()];
         return response($not_auth, 401)->header('Content-Type', 'application/json');
     }
    
