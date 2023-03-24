@@ -16,9 +16,6 @@ class AuthController extends Controller
     public function lookup($req)
     {
         $ref = $req->headers->get('origin');
-        $referrer = $this->getReferrer($req->getUri());
-
-        var_dump($ref);
 
         $auth = DB::table('auth')
                 ->where('host', $ref)
@@ -26,18 +23,6 @@ class AuthController extends Controller
         return $auth;
     }
 
-    private function getReferrer($uri) {
-        //$uri = $req->getUri();
-        $uri = Str::of($uri)->replace('http://', '');
-        $uri = Str::of($uri)->replace('https://', '');
-        $urisplit = Str::of($uri)->split('/[\s\/]+/');
-        $referrer = '';
-        if ($urisplit->count()>=1) {
-            $referrer = $urisplit[0];
-        }
-
-        return $referrer;
-    }
 
     protected function genBearer() {
         $generator = (new RandomGeneratorController);
