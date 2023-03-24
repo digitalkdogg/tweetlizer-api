@@ -9,14 +9,14 @@ class EncryptionController extends Controller
 {
     public function encrypt($str)
     {
+        var_dump($str);
         $encrypted = Crypt::encryptString($str);
         return $encrypted;
     }
 
     public function decrypt($str)
     {
-        $encrypted = Crypt::decryptString($str);
-        var_dump($encrypted);
+        $encrypted = Crypt::decryptString($str);;
         return $encrypted;
     }
 

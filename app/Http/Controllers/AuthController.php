@@ -10,16 +10,13 @@ use Illuminate\Support\Str;
 use Carbon;
 //use Header;
 use App\Http\Controllers\RandomGeneratorController;
-use App\Http\Controllers\EncryptionController;
 
 class AuthController extends Controller
 {
     public function lookup($req)
     {
-        $encryption = (new EncryptionController);
-
         $ref = $req->headers->get('origin');
-        $key = $encryption->decrypt($req->input('key'));
+        $key = $req->input('key');
 
         $auth = DB::table('auth')
                 ->where('host', $ref)
