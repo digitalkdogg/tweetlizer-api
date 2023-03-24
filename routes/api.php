@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RandomGeneratorController;
-use Request;
+use Request as Req;
 
 
 /*
@@ -48,7 +48,7 @@ Route::get('/auth', function () {
         $bearer = $auth->setBearer($data);
         return response($bearer, 200)->header('Content-Type', 'application/json');
     } else {
-        $not_auth = ['bearer'=>'not_authorized', 'ip'=> Request::ip()];
+        $not_auth = ['bearer'=>'not_authorized', 'ip'=> Req::ip()];
         return response($not_auth, 401)->header('Content-Type', 'application/json');
     }
    
