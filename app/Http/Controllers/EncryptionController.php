@@ -16,6 +16,7 @@ class EncryptionController extends Controller
     public function decrypt($str)
     {
         $encrypted = Crypt::decryptString($str);
+        var_dump($encrypted);
         return $encrypted;
     }
 
