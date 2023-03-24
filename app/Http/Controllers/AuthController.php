@@ -18,6 +18,8 @@ class AuthController extends Controller
         $ref = $req->headers->get('origin');
         $referrer = $this->getReferrer($req->getUri());
 
+        var_dump($ref);
+
         $auth = DB::table('auth')
                 ->where('host', $ref)
                 ->get();
@@ -34,7 +36,6 @@ class AuthController extends Controller
             $referrer = $urisplit[0];
         }
 
-        var_dump($referrer);
         return $referrer;
     }
 

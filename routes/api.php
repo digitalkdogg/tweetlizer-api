@@ -50,7 +50,7 @@ Route::post('/auth', function (Request $req) {
             $bearer = $auth->setBearer($data);
             return response($bearer, 200)->header('Content-Type', 'application/json');
         } else {
-            $not_auth = ['bearer'=>'not_authorized', 'ip'=> $req->getHttpHost()];
+            $not_auth = ['bearer'=>'not_authorized', 'host'=> $req->headers->get('origin')];
             return response($not_auth, 401)->header('Content-Type', 'application/json');
         }
     } else {
