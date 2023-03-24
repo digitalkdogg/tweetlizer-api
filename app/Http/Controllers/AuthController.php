@@ -15,10 +15,11 @@ class AuthController extends Controller
 {
     public function lookup($req)
     {
+        $ref = $req->headers->get('origin');
         $referrer = $this->getReferrer($req->getUri());
 
         $auth = DB::table('auth')
-                ->where('host', $referrer)
+                ->where('host', $ref)
                 ->get();
         return $auth;
     }
@@ -33,6 +34,7 @@ class AuthController extends Controller
             $referrer = $urisplit[0];
         }
 
+        var_dump($referrer);
         return $referrer;
     }
 
