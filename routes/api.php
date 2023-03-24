@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RandomGeneratorController;
-
+use App\Http\Controllers\EncryptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,12 @@ use App\Http\Controllers\RandomGeneratorController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('encrypt/{str}', function (string $str) {
+    //EncryptionController@encrypt
+    $encryptor = (new EncryptionController);
+    return $encryptor->encrypt($str);
 });
 
 Route::get('/genkey', function() {
