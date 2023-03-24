@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
         //var_dump(Header::get('referer'));
         $auth = DB::table('auth')
-                ->where('ip_address', $req)
+                ->where('host', $req)
                 ->get();
         return $auth;
     }
