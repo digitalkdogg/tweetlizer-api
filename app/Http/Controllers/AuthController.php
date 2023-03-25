@@ -25,6 +25,19 @@ class AuthController extends Controller
         return $auth;
     }
 
+    public function checkBearerValid($bearer)
+    {
+        $auth = DB::table('bearer')
+        ->where('bearer', $bearer)
+        ->get();
+
+        if ($auth->count() == 1) {
+            return true;
+        }
+    
+        return false;
+    }
+
 
     protected function genBearer() {
         $generator = (new RandomGeneratorController);

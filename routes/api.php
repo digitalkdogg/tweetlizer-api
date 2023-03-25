@@ -65,10 +65,15 @@ Route::post('/auth', function (Request $req) {
     }
 });
 
-Route::get('/test', function () {
+Route::get('/test/{bearer}', function (string $bearer) {
 
+    $auth = (new AuthController);
+
+    if ($auth->checkBearerValid($bearer) == true) {
+   
     //$results=DB::select('select * from posts where id=?',[1]);  
-    $tweets = (new TweetController)->getAll();
+        $tweets = (new TweetController)->getAll();
 
-    return response($tweets, 200)->header('Content-Type', 'application/json');
+        return response($tweets, 200)->header('Content-Type', 'application/json');
+    }
 });
